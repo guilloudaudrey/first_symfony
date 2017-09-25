@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+}
+
+header {
+    height: 100px;
+    background: yellow;
+    font-size: 2em;
+}
+
+.menu {
+    background: lightblue;
+    height: 500px;
+}
+
+.container {
+    display: flex;
+}
+
+footer {
+    height: 100px;
+    background: yellow;
+}
+
+.hover {
+    background: red;
+}

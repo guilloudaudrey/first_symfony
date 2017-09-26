@@ -157,7 +157,7 @@ class DefaultController extends Controller
             $em->persist($post);
             $em->flush();
         
-            return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+            return $this->redirectToRoute('blogid', array('id' => $post->getId()));
         }
  
          return $this->render('AppBundle:Default:newarticle.html.twig', array(
@@ -165,12 +165,44 @@ class DefaultController extends Controller
          ));
 
               
-                // [...]
-        
-        
+                // [...]  
      }
 
 
+
+
    // [...]
+
+
+   /**
+     * @Route("/myentity/update/{id}", name="entityupdate")  
+     *
+     * exemple d'url: http://localhost:8080/blog
+     *
+     */
+
+     public function updateEntityAction(Request $request, $id){
+        $post = $this->getDoctrine()
+        ->getRepository('AppBundle:Post')
+        ->find($id);
+
+        $form = $this->createForm(PostType::class, $post)
+        ->add('save', SubmitType::class, array('label' => 'Update Post'));
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+        
+            return $this->redirectToRoute('blogid', array('id' => $post->getId()));
+        }
+ 
+         return $this->render('AppBundle:Default:newarticle.html.twig', array(
+             'form' => $form->createView()
+         ));
+     }
+
                
 }

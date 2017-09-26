@@ -4,7 +4,14 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use AppBundle\Entity\Post;
+use AppBundle\Form\PostType;
 
 
 class DefaultController extends Controller
@@ -124,6 +131,46 @@ class DefaultController extends Controller
     }
              
                   // [...]
+                // [...]
+                  
+    /**
+     * @Route("/myentity/new", name="entitynew")  
+     *
+     * exemple d'url: http://localhost:8080/blog
+     *
+     */
+
+     public function newEntityAction(Request $request)
+     {
+     $post = new Post();
+ 
+
+     
+        $form = $this->createForm(PostType::class, $post)
+        ->add('save', SubmitType::class, array('label' => 'Create Post'));
 
 
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+        
+            return $this->redirectToRoute('post_show', array('id' => $post->getId()));
+        }
+ 
+         return $this->render('AppBundle:Default:newarticle.html.twig', array(
+             'form' => $form->createView(),
+         ));
+
+              
+                // [...]
+        
+        
+     }
+
+
+   // [...]
+               
 }

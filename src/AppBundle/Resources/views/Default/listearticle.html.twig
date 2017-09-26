@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+
+<ul>
+    {% for article in articles %}
+        <li><a href="http://localhost:8000/findOneBy{{article.id}}"> {{ article.title}}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

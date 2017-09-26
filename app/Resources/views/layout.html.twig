@@ -4,8 +4,10 @@
 {{ include('header.html.twig')}}
 <div class="container">
 {{ include('menu.html.twig')}}
+<div>
     {% block content %}
     {% endblock content %}
+    </div>
     </div>
 {{ include('footer.html.twig')}}
 {% endblock body %}

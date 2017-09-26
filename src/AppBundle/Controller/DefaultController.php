@@ -65,5 +65,65 @@ class DefaultController extends Controller
 
        // [...]
 
+                     // [...]
+
+    /**
+     * @Route("/findAll", name="Allblog")  
+     *
+     */
+
+     public function listArticleAction(){
+        $articles = $this->getDoctrine()
+        ->getRepository('AppBundle:Post')
+        ->findAll();
+
+        return $this->render('AppBundle:Default:listearticle.html.twig', array(
+            'articles' => $articles
+        ));
+
+     }
+
+          // [...]
+
+                             // [...]
+
+    /**
+     * @Route("/findOneBy{id}", name="blogid")  
+     *
+     * exemple d'url: http://localhost:8080/blog
+     *
+     */
+
+     public function showArticleAction($id){
+        $article = $this->getDoctrine()
+        ->getRepository('AppBundle:Post')
+        ->find($id);
+  
+        $title = $article->getTitle();
+        $content = $article->getContent();
+        $datecrea = $article->getCreatedAt()->format('d/m/Y');
+        $datemodif = $article->getUpdatedAt()->format('d/m/Y');
+        $like = $article->getLikenumber();
+
+    if (!$article) {
+        throw $this->createNotFoundException(
+            'No article found for id '.$id
+        );
+ 
+    }
+    return $this->render('AppBundle:Default:article.html.twig', array(
+        'id' => $id,
+'title' => $title,
+'content' => $content,
+'datecrea' => $datecrea,
+'datemodif' => $datemodif,
+'like' => $like
+     
+ 
+    ));
+    }
+             
+                  // [...]
+
 
 }

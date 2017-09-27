@@ -72,7 +72,7 @@ class DefaultController extends Controller
 
        // [...]
 
-                     // [...]
+        // [...]
 
     /**
      * @Route("/findAll", name="Allblog")  
@@ -92,7 +92,7 @@ class DefaultController extends Controller
 
           // [...]
 
-                             // [...]
+            // [...]
 
     /**
      * @Route("/findOneBy{id}", name="blogid")  
@@ -130,7 +130,7 @@ class DefaultController extends Controller
     ));
     }
              
-                  // [...]
+                // [...]
                 // [...]
                   
     /**
@@ -222,9 +222,17 @@ class DefaultController extends Controller
      *
      */
 
-     public function deleteEntityAction(Post $post){
+     public function deleteEntityAction(Request $request, Post $post){
       $form = $this->createDeleteForm($post);
   
+      $form->handleRequest($request);
+      
+      if ($form->isSubmitted() && $form->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          $em->remove($post);
+          $em->flush();
+          return $this->redirectToRoute('Allblog');
+      }
 
       return $this->render('AppBundle:Default:articledelete.html.twig', array(
         'form' => $form->createView()

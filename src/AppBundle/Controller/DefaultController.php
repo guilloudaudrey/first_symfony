@@ -105,12 +105,8 @@ class DefaultController extends Controller
         $article = $this->getDoctrine()
         ->getRepository('AppBundle:Post')
         ->find($id);
-  
-        $title = $article->getTitle();
-        $content = $article->getContent();
-        $datecrea = $article->getCreatedAt()->format('d/m/Y');
-        $datemodif = $article->getUpdatedAt()->format('d/m/Y');
-        $like = $article->getLikenumber();
+
+        $formDelete = $this->createDeleteForm($article);
 
     if (!$article) {
         throw $this->createNotFoundException(
@@ -119,12 +115,9 @@ class DefaultController extends Controller
  
     }
     return $this->render('AppBundle:Default:article.html.twig', array(
-        'id' => $id,
-'title' => $title,
-'content' => $content,
-'datecrea' => $datecrea,
-'datemodif' => $datemodif,
-'like' => $like
+        'article' => $article,
+        'form_delete' => $formDelete->createView(),
+
      
  
     ));
@@ -143,13 +136,8 @@ class DefaultController extends Controller
      public function newEntityAction(Request $request)
      {
      $post = new Post();
- 
-
-     
         $form = $this->createForm(PostType::class, $post)
         ->add('save', SubmitType::class, array('label' => 'Create Post'));
-
-
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -162,14 +150,9 @@ class DefaultController extends Controller
  
          return $this->render('AppBundle:Default:newarticle.html.twig', array(
              'form' => $form->createView(),
-         ));
-
-              
+         ));             
                 // [...]  
      }
-
-
-
 
    // [...]
 

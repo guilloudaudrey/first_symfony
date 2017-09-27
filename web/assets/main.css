@@ -25,3 +25,8 @@ footer {
 .hover {
     background: red;
 }
+
+.inputtitle {
+    background-color: #3CBC8D;
+    display: flex;
+}

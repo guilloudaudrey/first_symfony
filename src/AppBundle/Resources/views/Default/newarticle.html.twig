@@ -2,6 +2,19 @@
 
 {% block content %}
 {{ form_start(form) }}
+<div class="inputtitle">
+    {{ form_label(form.title, 'Title') }}
+    {{ form_errors(form.title) }}
+    {{ form_widget(form.title) }}
+</div>
+
+<div class="inputcontent">
+    {{ form_label(form.title, 'Title') }}
+    {{ form_errors(form.title) }}
+    {{ form_widget(form.title) }}
+</div>
+
+
 {{ form_widget(form) }}
 {{ form_end(form) }}
 {% endblock %}

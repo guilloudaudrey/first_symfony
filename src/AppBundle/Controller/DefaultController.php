@@ -204,5 +204,30 @@ class DefaultController extends Controller
          ));
      }
 
-               
+     private function createDeleteForm(Post $post)
+     {
+         //on crée un formulaire
+         return $this->createFormBuilder()
+             ->setAction($this->generateUrl('entityudelete', array('id' => $post->getId())))
+             ->setMethod('DELETE')
+             ->add('delete', SubmitType::class)
+             ->getForm()
+         ;
+     }
+      
+       /**
+     * @Route("/article_delete/{id}", name="entityudelete")  
+     *
+     * exemple d'url: http://localhost:8080/blog
+     *
+     */
+
+     public function deleteEntityAction(Post $post){
+      $form = $this->createDeleteForm($post);
+  
+
+      return $this->render('AppBundle:Default:articledelete.html.twig', array(
+        'form' => $form->createView()
+    ));
+     }
 }

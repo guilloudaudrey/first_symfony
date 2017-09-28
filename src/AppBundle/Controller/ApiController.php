@@ -23,8 +23,17 @@ class ApiController extends Controller
                      ->getManager()
                      ->getRepository('AppBundle:Post')
                      ->findAll();
+
+                     $formatted = [];
+                     foreach ($data as $d) {
+                         $formatted[] = [
+                            'id' => $d->getId(),
+                            'title' => $d->getTitle(),
+                            'content' => $d->getContent(),
+                         ];
+                     }
     
-        return new JsonResponse($data);
+        return new JsonResponse($formatted);
     }
 
      }
